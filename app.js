@@ -6,6 +6,10 @@ const app = express();
 const {config, engine} = require('express-edge');
 app.use(engine);
 
+const {showHomePage} = require('./controllers/PostController');
+
+const db = require('./db');
+
 // Serve static files located in the "public" folder
 app.use(express.static('public'));
 
@@ -13,9 +17,7 @@ app.use(express.static('public'));
 app.set('views', `${__dirname}/views`);
 
 // Set up a route for the root URL that renders the "index" view
-app.get('/', (req, res) => {
-    res.render('index');
-});
+app.get('/', showHomePage);
 
 // Start the web server on port 3000 and log a message to the console
 app.listen(3000, () => {
