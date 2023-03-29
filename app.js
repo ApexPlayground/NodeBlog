@@ -5,9 +5,9 @@ const app = express();
 // Import the edge module and configure it as the view engine
 const { config, engine } = require('express-edge');
 
-const expressFileUpload = require('express-fileupload')
+const expressFileUpload = require('express-fileupload');
 
-const {showHomePage, createPost, storePost} = require('./controllers/PostController');
+const {showHomePage, createPost, storePost,showPost} = require('./controllers/PostController');
 
 const db = require('./db');
 
@@ -33,6 +33,8 @@ app.get('/', showHomePage);
 app.get('/posts/new', createPost);
 
 app.post('/posts/store', storePost);
+
+app.get('/posts/:id', showPost);
 
 // Start the web server on port 3000 and log a message to the console
 app.listen(3000, () => {
