@@ -5,14 +5,16 @@ const PostSchema = new Schema({
         type: String,
         required: true,
     },
-    description: {
-        type: String,
-        required: true,
-    },
+    
     username: {
         type: String,
         required: true,
     },
+    description: {
+        type: String,
+        required: true,
+    },
+   
     image: {
         type: String,
     },
@@ -21,7 +23,17 @@ const PostSchema = new Schema({
         default: Date.now,
     },
 
+   
+
 });
 
+PostSchema.add({
+    content: {
+        type: String,
+        required: true,
+    },
+})
+
 const Post = mongoose.model("Post", PostSchema);
+console.log(Post);
 module.exports = Post;
