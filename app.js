@@ -5,12 +5,22 @@ const app = express();
 // Import the edge module and configure it as the view engine
 const { config, engine } = require('express-edge');
 
+const expressFileUpload = require('express-fileupload')
+
 const {showHomePage, createPost, storePost} = require('./controllers/PostController');
 
 const db = require('./db');
 
 // Serve static files located in the "public" folder
 app.use(express.static('public'));
+
+app.use(express.json());
+
+app.use(expressFileUpload());
+
+app.use(express.urlencoded({extended: true}));
+
+
 
 app.use(engine);
 
