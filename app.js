@@ -9,6 +9,13 @@ const expressFileUpload = require('express-fileupload');
 
 const {showHomePage, createPost, storePost,showPost} = require('./controllers/PostController');
 
+const {createUser, storeUser} = require('./controllers/UserController');
+
+app.use(engine);
+
+// Set the directory where the application's views are located
+app.set('views', `${__dirname}/views`);
+
 const db = require('./db');
 
 // Serve static files located in the "public" folder
@@ -22,10 +29,7 @@ app.use(express.urlencoded({extended: true}));
 
 
 
-app.use(engine);
 
-// Set the directory where the application's views are located
-app.set('views', `${__dirname}/views`);
 
 // Set up a route for the root URL that renders the "index" view
 app.get('/', showHomePage);
@@ -35,6 +39,10 @@ app.get('/posts/new', createPost);
 app.post('/posts/store', storePost);
 
 app.get('/posts/:id', showPost);
+
+app.get('/auth/register', createUser);
+
+app.post('/auth/register', storeUser);
 
 // Start the web server on port 3000 and log a message to the console
 app.listen(3000, () => {
