@@ -40,11 +40,13 @@ app.post('/posts/store', storePost);
 
 app.get('/posts/:id', showPost);
 
-app.get('/blog/reg', createUser);
+app.get('/auth/register', createUser);
 
 app.post('/auth/register', storeUser);
 
 app.get('/auth/login', showLogin);
+
+
 
 // Start the web server on port 3000 and log a message to the console
 app.listen(3000, () => {
