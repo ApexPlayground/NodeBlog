@@ -10,7 +10,7 @@ const storeUser = async (req, res) => {
 const showLogin= (req, res) => {
     res.render('loging.edge');
 
-}
+};
 
 module.exports ={
     createUser, storeUser, showLogin
