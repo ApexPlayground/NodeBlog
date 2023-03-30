@@ -7,9 +7,9 @@ const { config, engine } = require('express-edge');
 
 const expressFileUpload = require('express-fileupload');
 
-const {showHomePage, createPost, storePost,showPost} = require('./controllers/PostController');
+const { showHomePage, createPost, storePost, showPost } = require('./controllers/PostController');
 
-const {createUser, storeUser} = require('./controllers/UserController');
+const { createUser, storeUser, showLogin } = require('./controllers/UserController');
 
 app.use(engine);
 
@@ -25,7 +25,7 @@ app.use(express.json());
 
 app.use(expressFileUpload());
 
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
 
 
@@ -40,9 +40,11 @@ app.post('/posts/store', storePost);
 
 app.get('/posts/:id', showPost);
 
-app.get('/auth/register', createUser);
+app.get('/blog/reg', createUser);
 
 app.post('/auth/register', storeUser);
+
+app.get('/auth/login', showLogin);
 
 // Start the web server on port 3000 and log a message to the console
 app.listen(3000, () => {

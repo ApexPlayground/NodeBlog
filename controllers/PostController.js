@@ -9,7 +9,7 @@ const createPost = (req, res) => {
 }
 const storePost = async (req, res) => {
     try {
-        const {image} = req.files;
+        const { image } = req.files;
         await image.mv(path.resolve(__dirname, '..', 'public/posts', image.name));
         await Post.create({
             ...req.body,

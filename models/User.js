@@ -12,12 +12,6 @@ const UserSchema = new Schema({
     type: String,
     required: true,
     unique: true,
-    validate: {
-      validator: function (v) {
-        return /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test(v);
-      },
-      message: "Please enter a valid email",
-    },
   },
   password: {
     type: String,
@@ -29,21 +23,17 @@ const UserSchema = new Schema({
   },
 });
 
-UserSchema.pre("save", function (next) {
-  const user = this;
-
-  if (!user.isModified("password")) {
-    return next();
-  }
-
-  bcrypt.hash(user.password, 10, function (err, passwordHash) {
-    if (err) {
-      return next(err);
+UserSchema.pre("save", function(next){
+    if(!this.isModified("password")){
+        return next();
     }
-    user.password = passwordHash;
-    next();
-  });
+    bcrypt.hash(this.password, 10, (err, passwordHash) => {
+        if(err){
+            return next(err);
+        }
+        this.password = passwordHash;
+        next();
+    });
 });
-
 const User = mongoose.model("User", UserSchema);
 module.exports = User;
