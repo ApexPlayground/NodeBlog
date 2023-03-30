@@ -32,8 +32,7 @@ PostSchema.add({
         type: String,
         required: true,
     },
-})
+});
 
 const Post = mongoose.model("Post", PostSchema);
-console.log(Post);
 module.exports = Post;
