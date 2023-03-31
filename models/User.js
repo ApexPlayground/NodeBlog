@@ -1,11 +1,14 @@
-// Require the necessary modules
-const mongoose = require("mongoose"); // Mongoose for object modeling with MongoDB
-const bcrypt = require("bcrypt"); // Bcrypt for password hashing
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 const Schema = mongoose.Schema;
 
-// Define the user schema
+// Delete the old User model and schema, if they exist
+delete mongoose.connection.models['User'];
+mongoose.Schema.Types.String.checkRequired((v) => v != null);
+
+// Define the new user schema
 const UserSchema = new Schema({
-  Username: {
+  username: {
     type: String,
     required: true,
     unique: true,
@@ -49,7 +52,7 @@ UserSchema.pre("save", function(next){
     });
 });
 
-// Create a Mongoose model for the user schema
+// Create a new User model using the new schema
 const User = mongoose.model("User", UserSchema);
 
 // Export the User model to be used in other parts of the application
