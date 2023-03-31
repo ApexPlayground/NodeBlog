@@ -9,6 +9,8 @@ app.use(engine);
 // Set the directory where the application's views are located
 app.set('views', `${__dirname}/views`);
 
+const db = require('./db');
+
 // Import middleware modules
 const expressFileUpload = require('express-fileupload');
 const bodyParser = require('body-parser');
@@ -23,6 +25,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Import controller modules
 const { showHomePage, createPost, storePost, showPost } = require('./controllers/PostController');
 const { createUser, storeUser, showLogin, loginUser } = require('./controllers/UserController');
+
+
 
 // Set up routes
 app.get('/', showHomePage); // Route for the root URL that renders the "index" view
@@ -47,3 +51,4 @@ app.use((err, req, res, next) => {
 app.listen(3000, () => {
   console.log('Server started on port 3000');
 });
+
