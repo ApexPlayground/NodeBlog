@@ -8,13 +8,9 @@ const createUser = (req, res) => {
 
 // Save the new user data to the database
 const storeUser = async (req, res) => {
-  try {
-    await User.create(req.body);
+   User.create(req.body, (error, user) => {
     res.redirect('/');
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Server error');
-  }
+   });
 };
 
 // Render the login view
