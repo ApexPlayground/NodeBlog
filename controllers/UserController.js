@@ -9,17 +9,31 @@ const storeUser = async (req, res) => {
     await User.create(req.body);
     res.redirect('/');
   } catch (error) {
-    console.error(error);
-    res.status(500).send('Server error');
+    console.log(error);
+    res.status(500).send('Internal Server Error');
   }
 };
 const showLogin= (req, res) => {
-    res.render('loging.edge');
+    res.render('login');
 
 };
 
+const loginUser = async (req, res) => {
+  const {email, password} = req.body;
+  const user = await User.findOne({email});
+  if (user) {
+      const result = await bcrypt.compare(password, user.password);
+      if(result){
+          res.redirect('/');
+      }else{
+          res.redirect('/auth/login')
+      }
+  }
+};
+
 module.exports = {
-  createUser,
-  storeUser,
-  showLogin
+createUser,
+storeUser,
+showLogin,
+loginUser
 };
