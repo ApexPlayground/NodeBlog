@@ -9,25 +9,17 @@ const createPost = (req, res) => {
 }
 const storePost = async (req, res) => {
     try {
-        // Extract the image file from the request
-        const { image } = req.files;
-        // Move the image file to the public/posts directory
+        const {image} = req.files;
         await image.mv(path.resolve(__dirname, '..', 'public/posts', image.name));
-        // Create a new post in the database with the data from the request
         await Post.create({
             ...req.body,
             image: `/posts/${image.name}`,
         });
-        // Redirect to the home page
         res.redirect('/');
     } catch (error) {
-        // Handle any errors that occur
         console.log(error);
-        res.status(500).send('Internal Server Error');
     }
 }
-
-// Define a function that renders a post based on its ID
 const showPost = async (req, res) => {
     const post = await Post.findById(req.params.id);
     res.render('post', {post});
@@ -36,4 +28,3 @@ const showPost = async (req, res) => {
 module.exports = {
     showHomePage, createPost, storePost, showPost
 }
-
