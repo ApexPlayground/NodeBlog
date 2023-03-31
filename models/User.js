@@ -2,9 +2,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const Schema = mongoose.Schema;
 
-// Delete the old User model and schema, if they exist
-delete mongoose.connection.models['User'];
-mongoose.Schema.Types.String.checkRequired((v) => v != null);
+
 
 // Define the new user schema
 const UserSchema = new Schema({
@@ -12,6 +10,7 @@ const UserSchema = new Schema({
     type: String,
     required: true,
     unique: true,
+    default: "",
   },
   email: {
     type: String,
