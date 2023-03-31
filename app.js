@@ -7,44 +7,49 @@ const { config, engine } = require('express-edge');
 
 const expressFileUpload = require('express-fileupload');
 
-const { showHomePage, createPost, storePost, showPost } = require('./controllers/PostController');
+const { showHomePage,
+  createPost,
+  storePost,
+  showPost } = require('./controllers/PostController');
 
-const { createUser, storeUser, showLogin } = require('./controllers/UserController');
-
-app.use(engine);
-
-// Set the directory where the application's views are located
-app.set('views', `${__dirname}/views`);
-
-
+const { createUser,
+  storeUser,
+  showLogin,
+  loginUser} = require('./controllers/UserController');
 
 const db = require('./db');
 
 // Serve static files located in the "public" folder
 app.use(express.static('public'));
 
-// Set up middleware for handling JSON and form data
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
 
-// Import controller modules
-const { showHomePage, createPost, storePost, showPost } = require('./controllers/PostController');
-const { createUser, storeUser, showLogin } = require('./controllers/UserController');
+app.use(expressFileUpload());
 
-// Set up routes
-app.get('/', showHomePage); // Route for the root URL that renders the "index" view
-app.get('/posts/new', createPost); // Route for the "new post" page
-app.post('/posts/store', storePost); // Route for storing a new post
-app.get('/posts/:id', showPost); // Route for showing a specific post
-app.get('/auth/register', createUser); // Route for the "register" page
+app.use(express.urlencoded({ extended: true }));
+
+
+
+app.use(engine);
+
+// Set the directory where the application's views are located
+app.set('views', `${__dirname}/views`);
+
+// Set up a route for the root URL that renders the "index" view
+app.get('/', showHomePage);
+
+app.get('/posts/new', createPost);
+
+app.post('/posts/store', storePost);
+
+app.get('/posts/:id', showPost);
+
+app.get('/auth/register', createUser);
 app.post('/auth/register', storeUser); // Route for storing a new user
 app.get('/auth/login', showLogin); // Route for the "login" page
-
-// Set up middleware for handling file uploads
-app.use(expressFileUpload());
+app.post('/auth/login', loginUser);// Route to handle login form submission 
 
 // Start the web server on port 3000 and log a message to the console
 app.listen(3000, () => {
   console.log('Server started on port 3000');
 });
-
