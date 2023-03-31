@@ -16,7 +16,7 @@ const UserSchema = new Schema({
     unique: true,
     // Add an email validator using the Mongoose built-in validator with the 'match' option
     validate: {
-      validator: function (v) {
+      validator: function(v) {
         return /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test(v);
       },
       message: "Please enter a valid email address"
@@ -33,20 +33,20 @@ const UserSchema = new Schema({
 });
 
 // Add a pre-save hook to hash the user's password before saving it to the database
-UserSchema.pre("save", function (next) {
-  // Check if the password has been modified before hashing it
-  if (!this.isModified("password")) {
-    return next();
-  }
-  // Hash the password using bcrypt with a salt of 10
-  bcrypt.hash(this.password, 10, (err, passwordHash) => {
-    if (err) {
-      return next(err);
+UserSchema.pre("save", function(next){
+    // Check if the password has been modified before hashing it
+    if(!this.isModified("password")){
+        return next();
     }
-    // Set the user's password to the hashed password
-    this.password = passwordHash;
-    next();
-  });
+    // Hash the password using bcrypt with a salt of 10
+    bcrypt.hash(this.password, 10, (err, passwordHash) => {
+        if(err){
+            return next(err);
+        }
+        // Set the user's password to the hashed password
+        this.password = passwordHash;
+        next();
+    });
 });
 
 // Create a Mongoose model for the user schema
