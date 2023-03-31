@@ -14,6 +14,8 @@ const session = require("express-session");
 // Import the connect-mongo module to store session data in MongoDB
 const MongoStore = require("connect-mongo");
 
+const edge = require("edge.js");
+
 // Import controllers for handling requests
 const {
   showHomePage,
@@ -27,13 +29,18 @@ const {
   storeUser,
   showLogin,
   loginUser,
+  logoutUser
 } = require("./controllers/UserController");
 
 // Import auth middleware
 const { authenticateUser } = require("./middlewares/auth");
 
+const redirect = require("./middlewares/redirect");
+
 // Import the database connection
 const db = require("./db");
+
+const User = require("./models/User");
 
 // Serve static files located in the "public" folder
 app.use(express.static("public"));
@@ -72,11 +79,21 @@ app.use(
   })
 );
 
+app.use("*", async (req, res, next) => {
+  const { userId } = req.session;
+  if (userId) {
+    const user = await User.findById(userId);
+    res.locals.user = user;
+    res.locals.userId = req.session.userId;
+  }
+  next();
+});
+
 // Set up a route for the root URL that renders the "index" view
 app.get("/", showHomePage);
 
 // Set up a route for creating a new post
-app.get("/posts/new", createPost);
+app.get("/posts/new", redirect, createPost);
 
 // Set up a route for storing a new post in the database
 app.post("/posts/store", storePost);
@@ -89,6 +106,8 @@ app.get("/auth/register", createUser);
 app.post("/auth/register", storeUser); // Route for storing a new user
 app.get("/auth/login", authenticateUser, showLogin); // Route for the "login" page
 app.post("/auth/login", loginUser); // Route to handle login form submission
+app.get("/auth/logout", logoutUser); // Route to handle logout
+
 
 // Start the web server on port 3000 and log a message to the console
 app.listen(3000, () => {

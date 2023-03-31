@@ -28,8 +28,13 @@
                     <ul class="navbar-nav ms-auto py-4 py-lg-0">
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/">Home</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/posts/new">Add Post</a></li>
+                        @if(!userId)
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/auth/register">Register</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/auth/login">Login</a></li>
+                        @else
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="#">{{user.username}}</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4 text-danger" href="/auth/logout">Logout</a></li>
+                        @endif
                         
                     </ul>
                 </div>
