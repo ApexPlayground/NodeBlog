@@ -22,6 +22,9 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Set up middleware for handling file uploads
+app.use(expressFileUpload());
+
 // Import controller modules
 const { showHomePage, createPost, storePost, showPost } = require('./controllers/PostController');
 const { createUser, storeUser, showLogin, loginUser } = require('./controllers/UserController');
@@ -38,8 +41,7 @@ app.post('/auth/register', storeUser); // Route for storing a new user
 app.get('/auth/login', showLogin); // Route for the "login" page
 app.post('/auth/login', loginUser);// Route to handle login form submission 
 
-// Set up middleware for handling file uploads
-app.use(expressFileUpload());
+
 
 // Error handling middleware
 app.use((err, req, res, next) => {

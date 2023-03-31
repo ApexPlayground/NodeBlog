@@ -23,24 +23,35 @@ const createPost = (req, res) => {
 
 // Define a function that stores a new post in the database
 const storePost = async (req, res) => {
-    try {
-        // Extract the image file from the request
+    // Check if the req.files object exists and if the image property exists
+    if (req.files && req.files.image) {
+        // If the file exists, save it to the "public/posts/images" directory
         const { image } = req.files;
-        // Move the image file to the public/posts directory
-        await image.mv(path.resolve(__dirname, '..', 'public/posts', image.name));
-        // Create a new post in the database with the data from the request
-        await Post.create({
-            ...req.body,
-            image: `/posts/${image.name}`,
+        const imagePath = 'public/posts' + image.name;
+        image.mv(imagePath, async (err) => {
+            if (err) {
+                console.error(err);
+                res.status(500).send('An error occurred while uploading the image.');
+            } else {
+                // If the file is successfully saved, create a new post with the data from the request body
+                const { title, body } = req.body;
+                const post = new Post({ title, body, image: imagePath });
+                try {
+                    await post.save();
+                    res.redirect('/');
+                } catch (error) {
+                    console.error(error);
+                    res.status(500).send('An error occurred while creating the post.');
+                }
+            }
         });
-        // Redirect to the home page
-        res.redirect('/');
-    } catch (error) {
-        // Handle any errors that occur
-        console.log(error);
-        res.status(500).send('Internal Server Error');
+    } else {
+        // If the file doesn't exist, send an error response to the client
+        res.status(400).send('No file was uploaded.');
     }
-}
+};
+
+  
 
 // Define a function that renders a post based on its ID
 const showPost = async (req, res) => {
