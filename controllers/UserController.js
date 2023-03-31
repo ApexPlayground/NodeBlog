@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 const User = require('../models/User');
 
 // Render the view to create a new user
@@ -21,8 +22,22 @@ const showLogin = (req, res) => {
   res.render('login');
 };
 
+const loginUser = async (req, res) => {
+    const {email, password} = req.body;
+    const user = await User.findOne({email});
+    if (user) {
+        const result = await bcrypt.compare(password, user.password);
+        if(result){
+            res.redirect('/');
+        }else{
+            res.redirect('/auth/login')
+        }
+    }
+};
+
 module.exports = {
   createUser,
   storeUser,
-  showLogin
+  showLogin,
+  loginUser
 };
