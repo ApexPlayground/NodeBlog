@@ -64,10 +64,21 @@ const deletePost = async (req, res) => {
     res.status(500).send("Error deleting post");
   }
 };
+
+// Define an async function to edit a post from the database
+const editPost = async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+        res.render('edit_post', {post: post});
+    } catch (err) {
+        console.log(err);
+    }
+};
+
   
   
 
 // Export the showHomePage, createPost, storePost, and showPost functions
 module.exports = {
-    showHomePage, createPost, storePost, showPost, deletePost
+    showHomePage, createPost, storePost, showPost, deletePost, editPost
 }
