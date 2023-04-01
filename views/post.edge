@@ -20,12 +20,19 @@
               {{post.content}}
             </div>
         </div>
+        <div class="d-flex justify-content-center mt-3">
+            <form method="POST" action="/posts/{{post.id}}?_method=DELETE">
+              <button class="btn btn-danger me-2" type="submit" style="border-radius: 5px;">Delete Post</button>
+            </form>
+            <a href="/posts/{{post._id}}/edit" class="btn btn-success" style="background-color: green; border-radius: 5px;">Edit</a>
+          </div>
+          
+          
+          
     </div>
-    <div>
-        <form method="POST" action="/posts/{{post.id}}?_method=DELETE">
-            <button class="btn rounded-o btn-danger" type="submit">Delete Post</button>
-          </form>
-        
-    </div>
-
+    
+    
+    
+    
+    
 @endsection
