@@ -16,12 +16,15 @@ const MongoStore = require("connect-mongo");
 
 const edge = require("edge.js");
 
+const methodOverride = require("method-override");
+
 // Import controllers for handling requests
 const {
   showHomePage,
   createPost,
   storePost,
   showPost,
+  deletePost
 } = require("./controllers/PostController");
 
 const {
@@ -44,6 +47,9 @@ const User = require("./models/User");
 
 // Serve static files located in the "public" folder
 app.use(express.static("public"));
+
+// override with POST having ?_method=DELETE
+app.use(methodOverride('_method'));
 
 // Parse incoming JSON data
 app.use(express.json());
@@ -103,12 +109,24 @@ app.post("/posts/store", storePost);
 // Set up a route for showing a specific post
 app.get("/posts/:id", showPost);
 
+
 // Set up routes for user authentication
 app.get("/auth/register", createUser);
-app.post("/auth/register", storeUser); // Route for storing a new user
-app.get("/auth/login", authenticateUser, showLogin); // Route for the "login" page
-app.post("/auth/login", loginUser); // Route to handle login form submission
-app.get("/auth/logout", logoutUser); // Route to handle logout
+
+// Route for storing a new user
+app.post("/auth/register", storeUser); 
+
+ // Route for the "login" page
+app.get("/auth/login", authenticateUser, showLogin);
+
+// Route to handle login form submission
+app.post("/auth/login", loginUser); 
+
+// Route to handle logout
+app.get("/auth/logout", logoutUser); 
+
+// Route to handle delete blog
+app.delete("/posts/:id",deletePost);
 
 
 
