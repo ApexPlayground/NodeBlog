@@ -51,7 +51,23 @@ const showPost = async (req, res) => {
     res.render('post', {post});
 }
 
+// Define an async function to delete a post from the database
+const deletePost = async (req, res) => {
+    try {
+    const post = await Post.findByIdAndDelete(req.params.id);
+    if (!post) {
+      return res.status(404).send("Post not found");
+    }
+    res.redirect("/");
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Error deleting post");
+  }
+};
+  
+  
+
 // Export the showHomePage, createPost, storePost, and showPost functions
 module.exports = {
-    showHomePage, createPost, storePost, showPost
+    showHomePage, createPost, storePost, showPost, deletePost
 }
