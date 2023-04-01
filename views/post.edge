@@ -17,8 +17,12 @@
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
-              {{post.content}}
+                <p class="text-muted">{{post.username}} - {{post.createdAt}}</p>
+                <h2 class="post-title">{{post.title}}</h2>
+                <p class="post-content">{{post.content}}</p>
             </div>
+        </div>
+        
         </div>
         <div class="d-flex justify-content-center mt-3">
             <form method="POST" action="/posts/{{post.id}}?_method=DELETE">

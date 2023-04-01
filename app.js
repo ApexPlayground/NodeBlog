@@ -21,6 +21,7 @@ const methodOverride = require("method-override");
 // Import controllers for handling requests
 const {
   showHomePage,
+  getAllPosts,
   createPost,
   storePost,
   showPost,
@@ -28,6 +29,7 @@ const {
   editPost,
   updatePost
 } = require("./controllers/PostController");
+
 
 const {
   createUser,
@@ -99,16 +101,19 @@ app.use("*", async (req, res, next) => {
   next();
   });
 
-  
+
 
 // Set up a route for the root URL that renders the "index" view
 app.get("/", showHomePage);
+
+app.get("/allPosts", getAllPosts)
 
 // Set up a route for creating a new post
 app.get("/posts/new", redirect, createPost);
 
 // Set up a route for storing a new post in the database
 app.post("/posts/store", storePost);
+
 
 // Set up a route for showing a specific post
 app.get("/posts/:id", showPost);
