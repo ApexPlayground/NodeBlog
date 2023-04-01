@@ -24,7 +24,7 @@ const getAllPosts = async (req, res) => {
       res.render("error/500");
     }
   };
-  
+
 
 // Define a function to render the form for creating a new post
 const createPost = (req, res) => {
@@ -93,7 +93,7 @@ const editPost = async (req, res) => {
         console.log(err);
     }
 };
-
+// Define an async function to update a post
 const updatePost = async (req, res) => {
     try {
       const updatedPost = await Post.findByIdAndUpdate(

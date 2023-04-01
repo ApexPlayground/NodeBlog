@@ -106,6 +106,7 @@ app.use("*", async (req, res, next) => {
 // Set up a route for the root URL that renders the "index" view
 app.get("/", showHomePage);
 
+// Route that renders all blog posts 
 app.get("/allPosts", getAllPosts)
 
 // Set up a route for creating a new post
