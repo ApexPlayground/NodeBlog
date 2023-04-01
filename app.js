@@ -24,7 +24,8 @@ const {
   createPost,
   storePost,
   showPost,
-  deletePost
+  deletePost,
+  editPost
 } = require("./controllers/PostController");
 
 const {
@@ -126,7 +127,11 @@ app.post("/auth/login", loginUser);
 app.get("/auth/logout", logoutUser); 
 
 // Route to handle delete blog
-app.delete("/posts/:id",deletePost);
+app.delete("/posts/:id",redirect,deletePost);
+
+//Route to handle edit post 
+app.get("/posts/:id/edit", editPost);
+
 
 
 
