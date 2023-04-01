@@ -1,0 +1,60 @@
+@layout('layouts.app')
+@section('content')
+
+
+ <!-- Page Header-->
+ <header class="masthead" style="background-image: url('assets/img/addpost.jpg')">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="site-heading">
+                    <h1>Edit Post</h1>
+                    <span class="subheading">Edit and update your post here</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Main Content-->
+<div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+          <!--form-->
+            <form action="/posts/store" method="POST" enctype="multipart/form-data">
+                <div class="control-group">
+                  <div class="form-group floating-label-form-group controls">
+                    <label>Title</label>
+                    <input type="text" name="title" value="{{post.title}}"  class="form-control">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <div class="form-group floating-label-form-group controls">
+                    <label>Username</label>
+                    <input type="text" name="username" value="{{post.username}}" class="form-control" readonly required>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <div class="form-group floating-label-form-group controls">
+                    <label>Edit Description</label>
+                    <input type="text" name="description" value="{{post.description}}"  required class="form-control">
+                  </div>
+                </div>
+                <div class="control-group">
+                  <div class="form-group floating-label-form-group controls">
+                    <label>Content</label>
+                    <textarea name="content" cols="30" rows="10" required class="form-control">{{ post.content }}</textarea>
+                  </div>
+                </div>
+                <div class="form-group mt-3">
+                  <input type="file" name="image" value="{{post.image}}" class="form-control-file" >
+                </div>
+                <div class="form-group my-4 text-center">
+                 <input type="submit" value="Submit" class="btn btn-primary btn-xl">
+                </div>
+              </form>
+
+        </div>
+    </div>
+</div>
+
+@endsection
