@@ -1,17 +1,30 @@
 // Require the path module to work with file paths
 const path = require('path');
 
+
+
 // Require the Post model
 const Post = require('../models/Post');
 
 // Define an async function to show the home page with all the posts
 const showHomePage = async (req, res) => {
-    // Find all the posts in the database
-    const posts = await Post.find({});
+   // Find the 10 most recent posts in the database
+   const posts = await Post.find({}).sort({ createdAt: -1 }).limit(5);
 
     // Render the home page template and pass in the posts
     res.render('index', { posts });
 }
+
+const getAllPosts = async (req, res) => {
+    try {
+      const posts = await Post.find().sort({ createdAt: "desc" });
+      res.render("allPosts", { posts });
+    } catch (err) {
+      console.error(err);
+      res.render("error/500");
+    }
+  };
+  
 
 // Define a function to render the form for creating a new post
 const createPost = (req, res) => {
@@ -22,6 +35,11 @@ const createPost = (req, res) => {
 // Define an async function to store a new post in the database
 const storePost = async (req, res) => {
     try {
+        // Check if a file was uploaded with the request
+        if (!req.files || !req.files.image) {
+            throw new Error('No image file uploaded');
+        }
+
         // Get the image file from the request
         const { image } = req.files;
 
@@ -41,6 +59,7 @@ const storePost = async (req, res) => {
         console.log(error);
     }
 }
+
 
 // Define an async function to show a single post
 const showPost = async (req, res) => {
@@ -104,5 +123,5 @@ const fileUpload = require('express-fileupload');
 
 // Export the showHomePage, createPost, storePost, and showPost functions
 module.exports = {
-    showHomePage, createPost, storePost, showPost, deletePost, editPost, updatePost
+    showHomePage, createPost, storePost, showPost, deletePost, editPost, updatePost, getAllPosts
 }
