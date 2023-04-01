@@ -21,5 +21,11 @@
             </div>
         </div>
     </div>
+    <div>
+        <form method="POST" action="/posts/{{post.id}}?_method=DELETE">
+            <button class="btn rounded-o btn-danger" type="submit">Delete Post</button>
+          </form>
+        
+    </div>
 
 @endsection
