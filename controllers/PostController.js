@@ -1,30 +1,57 @@
+// Require the path module to work with file paths
 const path = require('path');
+
+// Require the Post model
 const Post = require('../models/Post');
+
+// Define an async function to show the home page with all the posts
 const showHomePage = async (req, res) => {
+    // Find all the posts in the database
     const posts = await Post.find({});
+
+    // Render the home page template and pass in the posts
     res.render('index', {posts});
 }
+
+// Define a function to render the form for creating a new post
 const createPost = (req, res) => {
+    // Render the add_post template
     res.render('add_post');
 }
+
+// Define an async function to store a new post in the database
 const storePost = async (req, res) => {
     try {
+        // Get the image file from the request
         const {image} = req.files;
+
+        // Move the image file to the public/posts folder
         await image.mv(path.resolve(__dirname, '..', 'public/posts', image.name));
+
+        // Create a new post in the database with the form data and the image file path
         await Post.create({
             ...req.body,
             image: `/posts/${image.name}`,
         });
+
+        // Redirect to the home page
         res.redirect('/');
     } catch (error) {
+        // If there is an error, log it to the console
         console.log(error);
     }
 }
+
+// Define an async function to show a single post
 const showPost = async (req, res) => {
+    // Find the post with the specified ID in the database
     const post = await Post.findById(req.params.id);
+
+    // Render the post template and pass in the post data
     res.render('post', {post});
 }
 
+// Export the showHomePage, createPost, storePost, and showPost functions
 module.exports = {
     showHomePage, createPost, storePost, showPost
 }

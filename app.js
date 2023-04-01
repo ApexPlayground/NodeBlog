@@ -79,15 +79,17 @@ app.use(
   })
 );
 
+// Set up middleware to add logged in user details to response locals for all routes
 app.use("*", async (req, res, next) => {
   const { userId } = req.session;
   if (userId) {
-    const user = await User.findById(userId);
-    res.locals.user = user;
-    res.locals.userId = req.session.userId;
+  const user = await User.findById(userId);
+  res.locals.user = user;
+  res.locals.userId = req.session.userId;
   }
   next();
-});
+  });
+
 
 // Set up a route for the root URL that renders the "index" view
 app.get("/", showHomePage);
@@ -107,6 +109,7 @@ app.post("/auth/register", storeUser); // Route for storing a new user
 app.get("/auth/login", authenticateUser, showLogin); // Route for the "login" page
 app.post("/auth/login", loginUser); // Route to handle login form submission
 app.get("/auth/logout", logoutUser); // Route to handle logout
+
 
 
 // Start the web server on port 3000 and log a message to the console
