@@ -25,7 +25,8 @@ const {
   storePost,
   showPost,
   deletePost,
-  editPost
+  editPost,
+  updatePost
 } = require("./controllers/PostController");
 
 const {
@@ -86,6 +87,7 @@ app.use(
   })
 );
 
+
 // Set up middleware to add logged in user details to response locals for all routes
 app.use("*", async (req, res, next) => {
   const { userId } = req.session;
@@ -97,6 +99,7 @@ app.use("*", async (req, res, next) => {
   next();
   });
 
+  
 
 // Set up a route for the root URL that renders the "index" view
 app.get("/", showHomePage);
@@ -130,8 +133,11 @@ app.get("/auth/logout", logoutUser);
 app.delete("/posts/:id",redirect,deletePost);
 
 //Route to handle edit post 
-app.get("/posts/:id/edit", editPost);
+app.get("/posts/:id/edit", redirect, editPost);
 
+
+//Route to handle Update Blog
+app.put("/posts/:id", updatePost),
 
 
 
