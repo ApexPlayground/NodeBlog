@@ -39,6 +39,11 @@ const {
   logoutUser
 } = require("./controllers/UserController");
 
+const {
+  showComments,
+  storeComment
+} = require("./controllers/CommentController");
+
 // Import auth middleware
 const { authenticateUser } = require("./middlewares/auth");
 
@@ -119,6 +124,9 @@ app.post("/posts/store", storePost);
 // Set up a route for showing a specific post
 app.get("/posts/:id", showPost);
 
+app.post("/comments/store", storeComment);
+
+app.get("/comments/:id", showComments)
 
 // Set up routes for user authentication
 app.get("/auth/register", createUser);
@@ -151,3 +159,4 @@ app.put("/posts/:id", updatePost),
 app.listen(3000, () => {
   console.log("Server started on port 3000");
 });
+
