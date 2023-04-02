@@ -22,8 +22,26 @@
                 <p class="post-content">{{post.content}}</p>
             </div>
         </div>
+
+        <div class="container pt-5">
+            <div class="container mx-auto">
+              <form action="/comments/store" method="POST" enctype="multipart/form-data">
+                <div class="form-floating">
+                  <textarea class="form-control" placeholder="Leave your comments here" id="floatingTextarea"></textarea>
+                  <label for="floatingTextarea">Comments</label>
+                </div>
+                <div class="text-center">
+                  <button type="Comment" class="btn btn-primary mt-3 mx-auto">Submit</button>
+                </div>
+              </form>
+            </div>
+          </div>
+          
+          
+
         
-        </div>
+
+       
         <div class="d-flex justify-content-center mt-3">
             <form method="POST" action="/posts/{{post.id}}?_method=DELETE">
               <button class="btn btn-danger me-2" type="submit" style="border-radius: 5px;">Delete Post</button>
