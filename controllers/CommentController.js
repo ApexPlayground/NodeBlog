@@ -1,42 +1,37 @@
-// Require the path module to work with file paths
-const path = require('path');
+const Comment = require('../models/Comment');
 
-const Comment = require('../models/Comments');
-
-
-// Define an async function to store a new post in the database
+// Define an async function to store a new user in the database
 const storeComment = async (req, res) => {
     try {
-    
-        // Create a new comment in the database with the form data 
-        await Comment.create({
-            ...req.body,
-        });
-
-        // Redirect to the post page
-        res.redirect('/posts/' + req.body.postId);
+      const { comment } = req.body;
+      const newComment = new Comment({ comments: comment });
+      const result = await newComment.save();
+      console.log("Comment stored in the database:", result);
+      res.redirect('/');
     } catch (error) {
-        // If there is an error, log it to the console
-        console.log(error);
+      console.error("Error storing comment in the database:", error);
+      res.status(500).send("Internal Server Error");
     }
-}
+  };
+  
+  
 
-
-// Define an async function to show comments
-const showComments = async (req, res) => {
+  const getAllComments = async (req, res) => {
     try {
-      // Find the comment with the specified ID in the database
-      const comment = await Comment.findById(req.params.id);
-  
-      // Render the comments template and pass in the post and comments data
-      res.render('comments', {comment});
+      const comments = await Comment.find({}, { comments: 1, _id: 0 });
+      console.log("All comments retrieved from the database:", comments);
+      res.render('post', { comments });
     } catch (error) {
-      console.error(error);
-      res.status(500).send('Server Error');
+      console.error("Error retrieving comments from the database:", error);
+      res.render('error', { error });
     }
-  }
-
-  module.exports = {
-    storeComment,showComments
-}
+  };
   
+
+
+
+
+module.exports = {
+    storeComment,getAllComments
+}
+
