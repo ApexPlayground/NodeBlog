@@ -22,6 +22,13 @@ const PostSchema = new Schema({
         type: Date,
         default: Date.now,
     },
+
+    comment: [
+        {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Comment'
+        }
+    ]
 });
 
 // Add a "content" field to the PostSchema
