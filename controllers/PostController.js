@@ -61,14 +61,18 @@ const storePost = async (req, res) => {
 }
 
 
-// Define an async function to show a single post
 const showPost = async (req, res) => {
-    // Find the post with the specified ID in the database
-    const post = await Post.findById(req.params.id);
-
-    // Render the post template and pass in the post data
-    res.render('post', { post });
-}
+    try {
+      const post = await Post.findById(req.params.id).populate('comments');
+      const comments = post.comments; // Get the comments from the post
+  
+      res.render('post', { post, comments }); // Pass the comments to the view
+    } catch (err) {
+      console.log(err);
+      res.redirect('/');
+    }
+  };
+  
 
 // Define an async function to delete a post from the database
 const deletePost = async (req, res)=> {
@@ -116,6 +120,7 @@ const updatePost = async (req, res) => {
 
 // Require the express-fileupload middleware to handle file uploads
 const fileUpload = require('express-fileupload');
+
   
 
 
