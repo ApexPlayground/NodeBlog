@@ -1,37 +1,31 @@
 const Comment = require('../models/Comment');
+const Post = require('../models/Post');
 
-// Define an async function to store a new user in the database
-const storeComment = async (req, res) => {
-    try {
-      const { comment } = req.body;
-      const newComment = new Comment({ comments: comment });
-      const result = await newComment.save();
-      console.log("Comment stored in the database:", result);
-      res.redirect('/');
-    } catch (error) {
-      console.error("Error storing comment in the database:", error);
-      res.status(500).send("Internal Server Error");
-    }
-  };
+const comment = async (req, res) => {
+  try {
+    const newComment = new Comment({
+      post: req.params.id,
+      comment: req.body.comment,
+    });
+    
+    const result = await newComment.save();
+    
+    const post = await Post.findById(req.params.id);
+    post.comments.push(result._id);
+    await post.save();
   
+    const populatedPost = await Post.findById(req.params.id).populate('comments');
   
-
-  const getAllComments = async (req, res) => {
-    try {
-      const comments = await Comment.find({}, { comments: 1, _id: 0 });
-      console.log("All comments retrieved from the database:", comments);
-      res.render('post', { comments });
-    } catch (error) {
-      console.error("Error retrieving comments from the database:", error);
-      res.render('error', { error });
-    }
-  };
+    console.log('=====comments=========')
+    console.log(post.comments);
+    console.log(result);
+    res.redirect(`/posts/${req.params.id}`);
+  } catch (err) {
+    console.log(err);
+    res.redirect(`/posts/${req.params.id}?error=saveError`);
+  }
+};
   
-
-
-
-
 module.exports = {
-    storeComment,getAllComments
-}
-
+  comment
+};
