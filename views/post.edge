@@ -23,46 +23,65 @@
             </div>
         </div>
        
+        @if(userId)
         <div class="d-flex justify-content-center mt-3">
-            <form method="POST" action="/posts/{{post.id}}?_method=DELETE">
-              <button class="btn btn-danger me-2" type="submit" style="border-radius: 5px;">Delete Post</button>
-            </form>
-            <a href="/posts/{{post._id}}/edit" class="btn btn-success" style="background-color: green; border-radius: 5px;">Edit</a>
-          </div>
+          <form method="POST" action="/posts/{{post.id}}?_method=DELETE">
+            <button class="btn btn-danger me-2" type="submit" style="border-radius: 5px;">Delete Post</button>
+          </form>
+          <a href="/posts/{{post._id}}/edit" class="btn btn-success" style="background-color: green; border-radius: 5px;">Edit</a>
+        </div>
+      @endif
+      
 
           <div class="container pt-5">
-            <div class="container mx-auto">
-              <form action="/posts/{{ post.id }}/comments" method="POST" enctype="multipart/form-data">
-                <div class="form-floating">
-                  <textarea class="form-control" placeholder="Leave your comments here" id="floatingTextarea" name="comment"></textarea>
-                  <label for="floatingTextarea">Comments</label>
+            <div class="row justify-content-center">
+              <div class="col-md-8">
+                <div class="card">
+                  <div class="card-header">Leave a Comment</div>
+                  <div class="card-body">
+                    <form action="/posts/{{ post.id }}/comments" method="POST">
+                        <div class="form-group mb-4">
+                            <textarea class="form-control" name="comment" placeholder="Write your comment here" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group row mb-0">
+                            <div class="col-md-12 text-center">
+                                <button type="submit" class="btn btn-primary rounded">Submit</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="text-center">
-                  <button type="submit" class="btn btn-primary mt-3 mx-auto">Submit</button>
+                
                 </div>
-              </form>
-          
-              <div class="pt-5">
-                <h2>Comments</h2>
-                <ul>
-                  @each(comment in comments)
-                    <li>@comment.comments</li>
-                  @endeach
-                </ul>
               </div>
+            </div>
+            <div class="pt-5">
+              <h2>Comments</h2>
+              <ul class="list-group">
+                @each(comment in post.comments)
+                <li class="list-group-item">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                      <strong>Anonymous</strong>
+                      <p>{{ comment.comment }}</p>
+                    </div>
+                    <div>
+
+                    @if(comment.createdAt)
+                    <small class="text-muted">{{ comment.createdAt.toLocaleString() }}</small>
+                    @endif
+                    
+
+                    </div>
+                  </div>
+                </li>
+                @endeach
+              </ul>
             </div>
           </div>
           
 
-          
-          
-    </div>
-    
 
-    
-    
-    
-    
-    
-    
+          
+          
+      
 @endsection
