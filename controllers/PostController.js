@@ -71,7 +71,7 @@ const showPost = async (req, res) => {
 }
 
 // Define an async function to delete a post from the database
-const deletePost = async (req, res) => {
+const deletePost = async (req, res)=> {
     try {
         const post = await Post.findByIdAndDelete(req.params.id);
         if (!post) {

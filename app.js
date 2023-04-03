@@ -40,8 +40,9 @@ const {
 } = require("./controllers/UserController");
 
 const {
-  showComments,
-  storeComment
+ // showComments,
+ storeComment,
+ getAllComments
 } = require("./controllers/CommentController");
 
 // Import auth middleware
@@ -124,9 +125,10 @@ app.post("/posts/store", storePost);
 // Set up a route for showing a specific post
 app.get("/posts/:id", showPost);
 
-app.post("/comments/store", storeComment);
+app.post("/posts/:id/comments", storeComment);
 
-app.get("/comments/:id", showComments)
+app.get("/comments/:id", getAllComments)
+
 
 // Set up routes for user authentication
 app.get("/auth/register", createUser);
@@ -144,7 +146,7 @@ app.post("/auth/login", loginUser);
 app.get("/auth/logout", logoutUser); 
 
 // Route to handle delete blog
-app.delete("/posts/:id",redirect,deletePost);
+app.delete("",redirect,deletePost);
 
 //Route to handle edit post 
 app.get("/posts/:id/edit", redirect, editPost);
@@ -152,6 +154,7 @@ app.get("/posts/:id/edit", redirect, editPost);
 
 //Route to handle Update Blog
 app.put("/posts/:id", updatePost),
+
 
 
 
