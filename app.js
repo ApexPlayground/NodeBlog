@@ -147,7 +147,8 @@ app.get("/auth/logout", logoutUser);
 // Route to handle delete blog
 app.delete("/posts/:id",redirect,deletePost);
 
-app.delete("/comments/:id");
+// route to delete comments 
+app.delete("/posts/:id/comments", comment);
 
 //Route to handle edit post 
 app.get("/posts/:id/edit", redirect, editPost);
