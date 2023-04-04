@@ -25,7 +25,15 @@ const comment = async (req, res) => {
     res.redirect(`/posts/${req.params.id}?error=saveError`);
   }
 };
+
+const editComment = async (req, res) => {
+
+}
+
+const deleteComment = async (req, res) => {
+
+}
   
 module.exports = {
-  comment
+  comment,editComment,deleteComment
 };

@@ -40,8 +40,10 @@ const {
 } = require("./controllers/UserController");
 
 const {
- // showComments,
- comment
+ 
+ comment,
+ editComment,
+ deleteComment
 } = require("./controllers/CommentController");
 
 // Import auth middleware
@@ -144,6 +146,8 @@ app.get("/auth/logout", logoutUser);
 
 // Route to handle delete blog
 app.delete("/posts/:id",redirect,deletePost);
+
+app.delete("/comments/:id");
 
 //Route to handle edit post 
 app.get("/posts/:id/edit", redirect, editPost);
