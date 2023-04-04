@@ -1,8 +1,6 @@
 // Require the path module to work with file paths
 const path = require('path');
 
-
-
 // Require the Post model
 const Post = require('../models/Post');
 

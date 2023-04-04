@@ -31,6 +31,16 @@ const editComment = async (req, res) => {
 }
 
 const deleteComment = async (req, res) => {
+  try {
+    const deletedComment = await Comment.findByIdAndDelete(req.params.id);
+    if (!deletedComment) {
+        return res.status(404).send("Comment not found");
+    }
+    res.redirect("/posts/${req.params.id}");
+} catch (error) {
+    console.log(error);
+    res.status(500).send("Error deleting Comment");
+}
 
 }
   
