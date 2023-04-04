@@ -124,6 +124,7 @@ app.post("/posts/store", storePost);
 // Set up a route for showing a specific post
 app.get("/posts/:id", showPost);
 
+// Set up a route for storing comments
 app.post("/posts/:id/comments", comment);
 
 // Set up routes for user authentication
@@ -154,8 +155,10 @@ app.put("/posts/:id", updatePost),
 
 
 
+
 // Start the web server on port 3000 and log a message to the console
 app.listen(3000, () => {
   console.log("Server started on port 3000");
 });
+
 

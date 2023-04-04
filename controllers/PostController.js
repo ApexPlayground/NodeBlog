@@ -60,7 +60,7 @@ const storePost = async (req, res) => {
     }
 }
 
-
+// function to showPost to the page 
 const showPost = async (req, res) => {
     try {
       const post = await Post.findById(req.params.id).populate('comments');
