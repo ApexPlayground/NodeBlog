@@ -11,6 +11,7 @@ const UserSchema = new Schema({
     required: true,
     unique: true,
     default: "",
+    Admin: false
   },
   email: {
     type: String,
@@ -31,6 +32,13 @@ const UserSchema = new Schema({
   createdAt: {
     type: Date,
     default: Date.now,
+  },
+  
+});
+UserSchema.add({
+  Admin: {
+    type: Boolean,
+    default: false
   },
 });
 
