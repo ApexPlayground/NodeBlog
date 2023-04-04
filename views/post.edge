@@ -23,7 +23,7 @@
             </div>
         </div>
        
-        @if(user.Admin != false)
+        @if(user.Admin != false && userId)
         <div class="d-flex justify-content-center mt-3">
           <form method="POST" action="/posts/{{post.id}}?_method=DELETE">
             <button class="btn btn-danger me-2" type="submit" style="border-radius: 5px;">Delete Post</button>
@@ -65,9 +65,12 @@
                 <li class="list-group-item">
                   <div class="d-flex justify-content-between align-items-center">
                     <div>
-                      <strong>Anonymous</strong>
+                      <i>Anonymous</i>
                       <p>{{ comment.comment }}</p>
-                      <form method="POST" action="/posts/{{ post.id }}/comments?_method=DELETE">
+                      <a href="/posts/{{post._id}}/edit" class="btn btn-success" style="background-color: green; border-radius: 5px;">
+                        <span class="edit-button-text">Edit Comment</span>
+                      </a>
+                      <form method="POST" action="/posts/{{ post.id }}/comments/{{ comment.id }}?_method=DELETE">
                         <button class="btn btn-danger me-2" type="submit" style="border-radius: 5px;">Delete Comment</button>
                       </form>
                     </div>

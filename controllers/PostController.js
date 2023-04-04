@@ -60,16 +60,21 @@ const storePost = async (req, res) => {
 
 // function to showPost to the page 
 const showPost = async (req, res) => {
-    try {
-      const post = await Post.findById(req.params.id).populate('comments');
-      const comments = post.comments; // Get the comments from the post
-  
-      res.render('post', { post, comments }); // Pass the comments to the view
-    } catch (err) {
-      console.log(err);
-      res.redirect('/');
+  try {
+    const post = await Post.findById(req.params.id).populate('comments');
+    if (!post) {
+      return res.status(404).send('Post not found');
     }
-  };
+    res.render('post', {
+      title: post.title,
+      post: post,
+    });
+  } catch (err) {
+    console.log(err);
+    res.redirect(`/posts/${req.params.id}?error=loadError`);
+  }
+};
+
   
 
 // Define an async function to delete a post from the database
