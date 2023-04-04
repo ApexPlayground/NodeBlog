@@ -42,7 +42,7 @@ const {
 const {
  
  comment,
- editComment,
+
  deleteComment
 } = require("./controllers/CommentController");
 
@@ -154,10 +154,6 @@ app.delete("/posts/:id/comments/:commentId", deleteComment);
 
 //Route to handle edit post 
 app.get("/posts/:id/edit", editPost);
-
-
-//Route to handle Update Blog
-app.put("/posts/:id", updatePost),
 
 
 
