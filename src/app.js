@@ -40,10 +40,10 @@ const {
 } = require("./controllers/UserController");
 
 const {
- 
- comment,
- editComment,
- deleteComment
+
+  comment,
+
+  deleteComment
 } = require("./controllers/CommentController");
 
 // Import auth middleware
@@ -101,12 +101,12 @@ app.use(
 app.use("*", async (req, res, next) => {
   const { userId } = req.session;
   if (userId) {
-  const user = await User.findById(userId);
-  res.locals.user = user;
-  res.locals.userId = req.session.userId;
+    const user = await User.findById(userId);
+    res.locals.user = user;
+    res.locals.userId = req.session.userId;
   }
   next();
-  });
+});
 
 
 
@@ -133,19 +133,19 @@ app.post("/posts/:id/comments", comment);
 app.get("/auth/register", createUser);
 
 // Route for storing a new user
-app.post("/auth/register", storeUser); 
+app.post("/auth/register", storeUser);
 
- // Route for the "login" page
+// Route for the "login" page
 app.get("/auth/login", authenticateUser, showLogin);
 
 // Route to handle login form submission
-app.post("/auth/login", loginUser); 
+app.post("/auth/login", loginUser);
 
 // Route to handle logout
-app.get("/auth/logout", logoutUser); 
+app.get("/auth/logout", logoutUser);
 
 // Route to handle delete blog
-app.delete("/posts/:id",deletePost);
+app.delete("/posts/:id", deletePost);
 
 
 // route to delete comments 
@@ -154,10 +154,6 @@ app.delete("/posts/:id/comments/:commentId", deleteComment);
 
 //Route to handle edit post 
 app.get("/posts/:id/edit", editPost);
-
-
-//Route to handle Update Blog
-app.put("/posts/:id", updatePost),
 
 
 

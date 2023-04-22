@@ -31,30 +31,6 @@ const comment = async (req, res) => {
 };
 
 
-const editComment = async (req, res) => {
-  try {
-    const updatedComment = await Comment.findByIdAndUpdate(
-      req.params.commentId,
-      { comment: req.body.comment },
-      { new: true }
-    );
-    if (!updatedComment) {
-      return res.status(404).send("Comment not found");
-    }
-
-    const post = await Post.findById(req.params.id);
-    if (!post) {
-      return res.status(404).send("Post not found");
-    }
-
-    res.redirect(`/posts/${post.id}`);
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("Error editing comment");
-  }
-};
-
-
 const deleteComment = async (req, res) => {
   try {
     const deletedComment = await Comment.findByIdAndDelete(req.params.commentId);
@@ -68,7 +44,7 @@ const deleteComment = async (req, res) => {
     }
 
     // Remove comment id from post comments array
-    post.comments = post.comments.filter(commentId => commentId && commentId.toString() !== deletedComment._id.toString());
+    post.comments = post.comments.filter(commentId => commentId.toString() !== deletedComment._id.toString());
     await post.save();
 
     res.redirect(`/posts/${post.id}`);
@@ -78,8 +54,7 @@ const deleteComment = async (req, res) => {
   }
 };
 
-
   
 module.exports = {
-  comment,editComment,deleteComment
+  comment,deleteComment
 };
