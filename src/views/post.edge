@@ -67,9 +67,6 @@
                     <div>
                       <i>Anonymous</i>
                       <p>{{ comment.comment }}</p>
-                      <a href="/posts/{{post._id}}/edit" class="btn btn-success" style="background-color: green; border-radius: 5px;">
-                        <span class="edit-button-text">Edit Comment</span>
-                      </a>
                       <form method="POST" action="/posts/{{ post.id }}/comments/{{ comment.id }}?_method=DELETE">
                         <button class="btn btn-danger me-2" type="submit" style="border-radius: 5px;">Delete Comment</button>
                       </form>
