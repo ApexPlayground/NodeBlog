@@ -91,7 +91,7 @@ app.use(
 
         // The session store to use for storing session data, using 'connect-mongo' to store in a MongoDB database
         store: MongoStore.create({
-            mongoUrl: "mongodb://0.0.0.0:27017/NodeBlog", // URL for connecting to the MongoDB database
+            mongoUrl: process.env.DATABASE, // URL for connecting to the MongoDB database
         }),
     })
 );
