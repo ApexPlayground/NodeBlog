@@ -1,10 +1,12 @@
+require('dotenv').config(); // load environment variables from .env file
+
 const mongoose = require('mongoose');
 
 // define an asynchronous function to connect to the database
-const db= async () => {
+const db = async () => {
   try {
     // connect to MongoDB using the provided URL
-    await mongoose.connect('mongodb://0.0.0.0:27017/NodeBlog', {
+    await mongoose.connect(process.env.DATABASE, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
