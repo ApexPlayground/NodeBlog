@@ -156,10 +156,8 @@ app.delete("/posts/:id/comments/:commentId", deleteComment);
 app.get("/posts/:id/edit", editPost);
 
 
-
-
-
 // Start the web server on port 3000 and log a message to the console
+
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
