@@ -147,13 +147,14 @@ app.get("/auth/logout", logoutUser);
 // Route to handle delete blog
 app.delete("/posts/:id", deletePost);
 
-
 // route to delete comments 
 app.delete("/posts/:id/comments/:commentId", deleteComment);
 
-
 //Route to handle edit post 
 app.get("/posts/:id/edit", editPost);
+
+//Route to handle Update Blog
+app.put("/posts/:id", updatePost);
 
 
 // Start the web server on port 3000 and log a message to the console
