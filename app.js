@@ -72,7 +72,8 @@ app.use(expressFileUpload());
 app.use(express.urlencoded({ extended: true }));
 
 // Configure the Edge.js template engine
-app.use(engine);
+app.set('view engine', 'edge');
+
 
 // Set the directory where the application's views are located
 app.set("views", `${__dirname}/views`);
