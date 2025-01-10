@@ -72,8 +72,7 @@ app.use(expressFileUpload());
 app.use(express.urlencoded({ extended: true }));
 
 // Configure the Edge.js template engine
-app.set('view engine', 'edge');
-
+app.use(engine);
 
 // Set the directory where the application's views are located
 app.set("views", `${__dirname}/views`);
@@ -92,7 +91,7 @@ app.use(
 
         // The session store to use for storing session data, using 'connect-mongo' to store in a MongoDB database
         store: MongoStore.create({
-            mongoUrl: process.env.DATABASE, // URL for connecting to the MongoDB database
+            mongoUrl: process.env.MONGODB_URI, // URL for connecting to the MongoDB database
         }),
     })
 );
