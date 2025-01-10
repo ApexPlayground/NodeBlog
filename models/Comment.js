@@ -16,14 +16,14 @@ CommentSchema.add({
   createdAt: {
     type: Date,
     default: Date.now,
-},
+  },
 });
 
 CommentSchema.add({
   createdAt: {
     type: Date,
     default: Date.now,
-},
+  },
 });
 
 

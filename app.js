@@ -159,7 +159,7 @@ app.put("/posts/:id", updatePost);
 
 // Start the web server on port 3000 and log a message to the console
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`);
